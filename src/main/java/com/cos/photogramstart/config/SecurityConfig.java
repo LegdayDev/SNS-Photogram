@@ -9,7 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration // IoC
 public class SecurityConfig {
 
-    @Bean
+    @Bean // 비밀번호를 암호화 시켜준다.
     BCryptPasswordEncoder encode(){
         return new BCryptPasswordEncoder();
     }
