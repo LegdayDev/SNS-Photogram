@@ -16,7 +16,7 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(unique = true) //유니크 제약조건 설정
+    @Column(length = 20,unique = true) //유니크 제약조건 설정
     private String username;
     private String password;
 
