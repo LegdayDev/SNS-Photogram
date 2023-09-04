@@ -17,6 +17,13 @@
 	<artifactId>spring-security-taglibs</artifactId>
 </dependency>
 
+<!-- Validation 라이브러리 -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+	<version>2.4.4</version>
+</dependency>
+
 <!-- JSP 템플릿 엔진 -->
 <dependency>
 	<groupId>org.apache.tomcat</groupId>
