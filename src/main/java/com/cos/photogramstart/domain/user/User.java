@@ -16,13 +16,15 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 20,unique = true) //유니크 제약조건 설정
+    @Column(length = 20,unique = true,nullable = false) //유니크 제약조건 설정
     private String username;
+    @Column(nullable = false)
     private String password;
-
+    @Column(nullable = false)
     private String name;
     private String website; // 웹사이트
     private String bio; // 자기소개
+    @Column(nullable = false)
     private String email;
     private String phone;
     private String gender;
