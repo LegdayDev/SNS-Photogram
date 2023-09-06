@@ -11,10 +11,10 @@ function update(userId, event) {
         data : data,
         contentType : "application/x-www-form-urlencoded; charset=utf-8",
         dataType : "json"
-    }).done(res=>{
-        console.log("update 성공");
+    }).done(res=>{ // HttpStatus 200번대
+        console.log("성공",res);
         location.href=`/user/${userId}`;
-    }).fail(error=>{
-        console.log("update 실패");
+    }).fail(error=>{ // HttpStatus 200번대가 아닐때
+        alert(JSON.stringify(error.responseJSON.data));
     });
 }
