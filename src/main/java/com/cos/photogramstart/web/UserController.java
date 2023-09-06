@@ -19,8 +19,7 @@ public class UserController {
 
     @GetMapping("/user/{id}/update")
     public String update(@PathVariable int id,
-                         @AuthenticationPrincipal PrincipalDetails principalDetails,
-                         Model model){
+                         @AuthenticationPrincipal PrincipalDetails principalDetails){
         /** Security Session 찾기
          * 1. @AuthenticationPrincipal 어노테이션을 이용(권장)
              System.out.println("세션 정보 : " + principalDetails.getUser());
@@ -29,8 +28,6 @@ public class UserController {
              PrincipalDetails mPrincipalDetails = (PrincipalDetails)auth.getPrincipal();
              System.out.println("직접 찾은 세션 정보 : " + mPrincipalDetails.getUser());
          */
-
-        model.addAttribute("principal", principalDetails.getUser());
 
         return "user/update";
     }
