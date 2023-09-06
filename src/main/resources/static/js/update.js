@@ -1,5 +1,6 @@
 // (1) 회원정보 수정
 function update(userId, event) {
+    event.preventDefault(); // Form 태그 액션을 막는다.
     let data = $("#profileUpdate").serialize(); // data 에 다 담긴다.
 
     console.log(data);
