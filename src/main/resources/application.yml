@@ -41,5 +41,6 @@ spring:
 logging:
   level:
     org.hibernate.SQL: debug
-#file:
-#  path: C:/workspace/springbootwork/upload/
+
+file:
+  path: /Users/jaeyoung/Desktop/workspaces/SNS_Photogram/upload/
