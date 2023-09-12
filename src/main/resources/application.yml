@@ -43,4 +43,4 @@ logging:
     org.hibernate.SQL: debug
 
 file:
-  path: /Users/jaeyoung/Desktop/workspaces/SNS_Photogram/upload/
+  path: /Users/jaeyoung/Desktop/workspaces/upload/
