@@ -1,7 +1,9 @@
 package com.cos.photogramstart.service;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
+import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,11 +26,7 @@ public class ImageService {
 
     @Transactional
     public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails){
-        /**
-         * UUID 를 사용하는 이유
-         * 사용자는 서버에 이미지가 어떤이름으로 저장되는지 모르기에 같은 파일을 또 저장할 수 있다.
-         * DB 에서는 구분해야 하기 때문에 UUID 식별자를 붙혀서 똑같은 이름의 파일을 구분한다.
-         */
+
         UUID uuid = UUID.randomUUID();
 
         // getOriginalFilename()은 실제 파일명을 리턴해준다.
@@ -44,5 +42,10 @@ public class ImageService {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+        // image 테이블에 저장
+        Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser());
+        Image imageEntity = imageRepository.save(image);
+        System.out.println(imageEntity);
     }
 }
