@@ -5,8 +5,11 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 public class ImageUploadDto {
+    // multipart 타입은 @NotBlank 지원안함
     private MultipartFile file;
     private String caption;
 

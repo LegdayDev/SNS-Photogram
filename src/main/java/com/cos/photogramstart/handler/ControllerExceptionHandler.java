@@ -23,8 +23,11 @@ public class ControllerExceptionHandler {
         // 1. 클라이언트에게 응답할 때는 Script 좋음.
         // 2. Ajax 통신을 할 때에는 CMRespDto 가 좋다.
         // 3. Android 통신 - CMRespDto 가 좋다.
-        return Script.back(e.getErrorMap().toString());
-        //return e.getErrorMap();
+        if(e.getErrorMap() == null){
+            return Script.back(e.getMessage());
+        }else{
+            return Script.back(e.getErrorMap().toString());
+        }
     }
 
     @ExceptionHandler(CustomValidationApiException.class) //CustomValidationException 이 발생하는 모든 오류를 이 메서드가 가로챈다.
