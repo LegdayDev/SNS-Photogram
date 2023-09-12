@@ -44,7 +44,6 @@ public class ImageService {
         }
 
         // image 테이블에 저장
-        Image image = imageUploadDto.toEntity(imageFileName,principalDetails.getUser());
-        Image imageEntity = imageRepository.save(image);
+        Image imageEntity = imageRepository.save(imageUploadDto.toEntity(imageFileName,principalDetails.getUser()));
     }
 }
