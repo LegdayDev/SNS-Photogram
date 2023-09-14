@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -38,5 +39,10 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CustomApiException.class)
     public ResponseEntity<?> apiException(CustomApiException e){
         return new ResponseEntity<>(new CMRespDto<>(-1,e.getMessage(),null),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomException.class) //CustomValidationException 이 발생하는 모든 오류를 이 메서드가 가로챈다.
+    public String  exception(CustomException e){
+        return Script.back(e.getMessage());
     }
 }
