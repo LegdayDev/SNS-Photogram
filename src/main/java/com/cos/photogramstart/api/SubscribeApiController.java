@@ -29,6 +29,6 @@ public class SubscribeApiController {
     public ResponseEntity<?> unSubscribe(@AuthenticationPrincipal PrincipalDetails principalDetails,
                                          @PathVariable int toUserId){
         subScribeService.구독취소하기(principalDetails.getUser().getId(), toUserId);
-        return new ResponseEntity<>(new CMRespDto<>(1,"구독하기 성공",null), HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1,"구독취소 성공",null), HttpStatus.OK);
     }
 }
