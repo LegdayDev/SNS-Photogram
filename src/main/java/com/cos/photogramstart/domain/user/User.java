@@ -4,6 +4,8 @@ package com.cos.photogramstart.domain.user;
 
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.subscribe.Subscribe;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,7 +39,9 @@ public class User {
 
     //양방향 매핑
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
     private List<Image> images;
+
     @OneToMany(mappedBy = "")
     private List<Subscribe> subscribes;
 
