@@ -17,9 +17,11 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user/{id}")
-    public String profile(@PathVariable int id, Model model){
-        model.addAttribute("user",userService.회원프로필(id));
+    @GetMapping("/user/{pageUserId}")
+    public String profile(@PathVariable int pageUserId,
+                          Model model,
+                          @AuthenticationPrincipal PrincipalDetails principalDetails){
+        model.addAttribute("dto",userService.회원프로필(pageUserId,principalDetails.getUser().getId()));
         return "user/profile";
     }
 
