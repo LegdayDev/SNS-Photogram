@@ -3,7 +3,6 @@ package com.cos.photogramstart.service;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
-import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -47,5 +47,9 @@ public class ImageService {
         // image 테이블에 저장
         imageRepository.save(imageUploadDto.toEntity(imageFileName,principalDetails.getUser()));
 //        System.out.println(imageEntity);
+    }
+
+    public List<Image> 이미지스토리(int principalId){
+        return imageRepository.mStory(principalId);
     }
 }
