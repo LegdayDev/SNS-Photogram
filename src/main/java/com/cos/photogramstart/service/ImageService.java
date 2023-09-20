@@ -52,6 +52,16 @@ public class ImageService {
     }
 
     public Page<Image> 이미지스토리(int principalId, Pageable pageable){
-        return imageRepository.mStory(principalId, pageable);
+        Page<Image> images = imageRepository.mStory(principalId, pageable);
+
+        // 좋아요 상태 담기
+        images.forEach((image)->{
+            image.getLikes().forEach((like)->{
+                if(like.getUser().getId() == principalId){
+                    image.setLikeState(true);
+                }
+            });
+        });
+        return images;
     }
 }
