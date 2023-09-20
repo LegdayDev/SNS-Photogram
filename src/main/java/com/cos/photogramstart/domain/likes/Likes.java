@@ -32,8 +32,8 @@ public class Likes {
     private Image image;
 
     // 오류가 터지고 나서 @JsonIgnoreProperties 를 해주자.
-    @JsonIgnoreProperties
     @ManyToOne
+    @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "userId")
     private User user;
 
