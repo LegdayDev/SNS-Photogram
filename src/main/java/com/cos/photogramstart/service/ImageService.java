@@ -56,6 +56,7 @@ public class ImageService {
 
         // 좋아요 상태 담기
         images.forEach((image)->{
+            image.setLikeCount(image.getLikes().size());
             image.getLikes().forEach((like)->{
                 if(like.getUser().getId() == principalId){
                     image.setLikeState(true);

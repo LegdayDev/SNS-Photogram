@@ -41,6 +41,9 @@ public class Image {
     @Transient // DB 에 컬럼이 만들어지지 않는다.
     private boolean likeState;
 
+    @Transient
+    private int likeCount;
+
     private LocalDateTime createDate;
 
     @PrePersist // DB에 INSERT 되기 직전에 실행
