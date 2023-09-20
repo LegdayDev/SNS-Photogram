@@ -2,6 +2,7 @@ package com.cos.photogramstart.domain.likes;
 
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Likes {
     private Image image;
 
     // 오류가 터지고 나서 @JsonIgnoreProperties 를 해주자.
+    @JsonIgnoreProperties
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
