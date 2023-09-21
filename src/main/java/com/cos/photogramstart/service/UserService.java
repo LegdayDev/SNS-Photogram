@@ -3,16 +3,21 @@ package com.cos.photogramstart.service;
 import com.cos.photogramstart.domain.subscribe.SubscribeRepository;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
-import java.util.function.Supplier;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -22,6 +27,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final SubscribeRepository subscribeRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${file.path}")
+    private String uploadFolder;
 
     public UserProfileDto 회원프로필(int pageUserId, int principalId){
         UserProfileDto dto = new UserProfileDto();
@@ -67,6 +75,33 @@ public class UserService {
         userEntity.setBio(user.getBio());
         userEntity.setPhone(user.getPhone());
         userEntity.setGender(user.getGender());
+
+        return userEntity;
+    }
+
+    @Transactional
+    public User 회원프로필사진변경(int principalId, MultipartFile profileImageFile) {
+
+        UUID uuid = UUID.randomUUID();
+
+        // getOriginalFilename()은 실제 파일명을 리턴해준다.
+        String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
+
+        // 실제 경로를 저장 Path(nio 패키지) : 파일이 저장되는 경로 + 파일 이름 = 실제 저장되는 경로
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+
+        // 통신 , I/O 가
+        try{
+            //write() 메서드는 실제 파일 경로와 실제 들어오는 파일을 Byte 로 바꾼것 , option 을 받는다.
+            Files.write( imageFilePath,profileImageFile.getBytes());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        User userEntity = userRepository.findById(principalId).orElseThrow(() -> {
+            throw new CustomApiException("유저를 찾을 수 없습니다.");
+        });
+        userEntity.setProfileImageUrl(imageFileName);
 
         return userEntity;
     }
