@@ -65,4 +65,8 @@ public class ImageService {
         });
         return images;
     }
+
+    public List<Image> 인기사진() {
+        return imageRepository.mPopular();
+    }
 }

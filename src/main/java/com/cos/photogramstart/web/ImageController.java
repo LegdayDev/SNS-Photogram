@@ -7,6 +7,7 @@ import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,8 @@ public class ImageController {
     }
 
     @GetMapping("/image/popular")
-    public String popular(){
+    public String popular(Model model){
+        model.addAttribute("images",imageService.인기사진());
         return "image/popular";
     }
 
