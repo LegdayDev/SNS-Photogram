@@ -169,7 +169,6 @@ function addComment(imageId) {
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).done(res => {
-        console.log("성공", res);
         let comment = res.data;
         let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
@@ -184,7 +183,8 @@ function addComment(imageId) {
 		`;
         commentList.prepend(content);
     }).fail(error => {
-        console.log("실패", error);
+        console.log("실패", error.responseJSON.data.content);
+        alert(error.responseJSON.data.content);
     });
 
 
