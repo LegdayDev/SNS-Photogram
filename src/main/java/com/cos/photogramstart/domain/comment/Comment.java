@@ -2,6 +2,7 @@ package com.cos.photogramstart.domain.comment;
 
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Comment {
     @Column(length = 100, nullable = false)
     private String content;
 
+    @JsonIgnoreProperties({"images"})
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
