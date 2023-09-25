@@ -4,14 +4,17 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Data
-public class PrincipalDetails  implements UserDetails {
+public class PrincipalDetails  implements UserDetails, OAuth2User {
 
     private User user;
+    private Map<String, Object> attributes;
 
 
     public User getUser() {
@@ -23,6 +26,10 @@ public class PrincipalDetails  implements UserDetails {
 
     public PrincipalDetails(User user){
         this.user=user;
+    }
+
+    public PrincipalDetails(User user, Map<String, Object> attributes){
+        this.user = user;
     }
 
     // 권한 : 권한이 한개가 아닐수 있다.(3개 이상의 권한)
@@ -63,6 +70,16 @@ public class PrincipalDetails  implements UserDetails {
     @Override
     public boolean isEnabled() { //활성화 되었는지 ?
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return (String)attributes.get("name");
     }
 
     // 하나라도 false 면 로그인이 안된다.

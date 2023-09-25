@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .loginPage("/auth/signin") //get
                 .loginProcessingUrl("/auth/signin") //POST -> 스프링 시큐리티가 로그인 프로세스 진행
                 .defaultSuccessUrl("/")
+                //successHandler() -> 로그인 성공시 어디로 보낼지 정할 수 있다.
                 .and()
                 .oauth2Login() // OAuth2 로그인을 한다.
                 .userInfoEndpoint() //OAuth2 로그인을 하면 최종응답을 회원정보로 바로 받는다.
