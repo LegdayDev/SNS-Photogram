@@ -37,10 +37,21 @@ spring:
     user:
       name: test
       password: 1234
+    oauth2:
+      client:
+        registration:
+          facebook:
+            client-id: 1809888512761958
+            client-secret: c7689946ca6388d2e13315dd1ed33a19
+            scope:
+              - public_profile
+              - email
+
 
 logging:
   level:
     org.hibernate.SQL: debug
+
 
 file:
   path: /Users/jaeyoung/Desktop/workspaces/upload/
