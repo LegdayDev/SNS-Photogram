@@ -26,29 +26,19 @@ public class AuthController { // 인증을 위한 컨트롤러
     private final AuthService authService;
 
     @GetMapping("/auth/signin")
-    public String signInForm(){
+    public String signInForm() {
         return "auth/signin";
     }
 
     @GetMapping("/auth/signup")
-    public String signUpForm(){
+    public String signUpForm() {
         return "auth/signup";
     }
 
     @PostMapping("/auth/signup")
-    public String signUp(@Valid SignupDto signupDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){ // Validation 후 error 가 있다면
-            Map<String, String> errorMap = new HashMap<>();
-
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(),error.getDefaultMessage());
-                log.error(error.getDefaultMessage());
-            }
-            throw new CustomValidationException("유효성 검사 실패함",errorMap);
-        }else{
-            User user = signupDto.toEntity();
-            User userEntity = authService.회원가입(user);
-            return "auth/signin"; //로그인 페이지로 이동
-        }
+    public String signUp(@Valid SignupDto signupDto, BindingResult bindingResult) {
+        User user = signupDto.toEntity();
+        User userEntity = authService.회원가입(user);
+        return "auth/signin"; //로그인 페이지로 이동
     }
 }

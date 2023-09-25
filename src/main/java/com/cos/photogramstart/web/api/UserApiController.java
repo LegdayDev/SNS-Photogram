@@ -39,43 +39,31 @@ public class UserApiController {
     @PutMapping("/api/user/{principalId}/profileImageUrl")
     public ResponseEntity<?> profileImageUrlUpdate(@PathVariable int principalId,
                                                    MultipartFile profileImageFile,
-                                                   @AuthenticationPrincipal PrincipalDetails principalDetails){
+                                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
         // MultipartFile 의 변수명은 JSP 에서 이미지를 받는 <form>태그의 name 과 똑같이 해줘야한다.
         User userEntity = userService.회원프로필사진변경(principalId, profileImageFile);
         principalDetails.setUser(userEntity); // 세션 변경
-        return new ResponseEntity<>(new CMRespDto<>(1,"프로필사진변경 성공",null),HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1, "프로필사진변경 성공", null), HttpStatus.OK);
     }
 
     @GetMapping("/api/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@PathVariable int pageUserId,
-                                           @AuthenticationPrincipal PrincipalDetails principalDetails){
-        List<SubscribeDto> subscribeDto = subScribeService.구독리스트(principalDetails.getUser().getId(),pageUserId);
+                                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        List<SubscribeDto> subscribeDto = subScribeService.구독리스트(principalDetails.getUser().getId(), pageUserId);
 
-        return new ResponseEntity<>(new CMRespDto<>(1,"구독자 정보 리스트 불러오기 성공", subscribeDto), HttpStatus.OK);
+        return new ResponseEntity<>(new CMRespDto<>(1, "구독자 정보 리스트 불러오기 성공", subscribeDto), HttpStatus.OK);
     }
-
 
 
     @PutMapping("/api/user/{userId}")
     public CMRespDto<?> update(@PathVariable int userId,
                                @Valid UserUpdateDto userUpdateDto,
                                BindingResult bindingResult,// 반드시 @Valid 가 붙은 파라미터 뒤에 와야한다.
-                               @AuthenticationPrincipal PrincipalDetails principalDetails){
+                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        if(bindingResult.hasErrors()){ // Validation 후 error 가 있다면
-            Map<String, String> errorMap = new HashMap<>();
+        User userEntity = userService.회원수정(userId, userUpdateDto.toEntity());
+        principalDetails.setUser(userEntity); // 세션 정보 업데이트
+        return new CMRespDto<>(1, "회원수정완료", userEntity);
 
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(),error.getDefaultMessage());
-                log.error(error.getDefaultMessage());
-            }
-            throw new CustomValidationApiException("유효성 검사 실패함",errorMap);
-        }else{
-            User userEntity = userService.회원수정(userId, userUpdateDto.toEntity());
-
-            principalDetails.setUser(userEntity); // 세션 정보 업데이트
-
-            return new CMRespDto<>(1,"회원수정완료",userEntity);
-        }
     }
 }
