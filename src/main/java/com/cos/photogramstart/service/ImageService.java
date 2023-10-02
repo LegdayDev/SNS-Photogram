@@ -3,6 +3,7 @@ package com.cos.photogramstart.service;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
+import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class ImageService {
     private String uploadFolder;
 
     @Transactional
-    public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails){
+    public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
 
         UUID uuid = UUID.randomUUID();
 
@@ -39,26 +41,26 @@ public class ImageService {
         Path imageFilePath = Paths.get(uploadFolder + imageFileName);
 
         // 통신 , I/O 가
-        try{
+        try {
             //write() 메서드는 실제 파일 경로와 실제 들어오는 파일을 Byte 로 바꾼것 , option 을 받는다.
-            Files.write( imageFilePath,imageUploadDto.getFile().getBytes());
-        } catch (Exception e){
+            Files.write(imageFilePath, imageUploadDto.getFile().getBytes());
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         // image 테이블에 저장
-        imageRepository.save(imageUploadDto.toEntity(imageFileName,principalDetails.getUser()));
+        imageRepository.save(imageUploadDto.toEntity(imageFileName, principalDetails.getUser()));
 //        System.out.println(imageEntity);
     }
 
-    public Page<Image> 이미지스토리(int principalId, Pageable pageable){
+    public Page<Image> 이미지스토리(int principalId, Pageable pageable) {
         Page<Image> images = imageRepository.mStory(principalId, pageable);
 
         // 좋아요 상태 담기
-        images.forEach((image)->{
+        images.forEach((image) -> {
             image.setLikeCount(image.getLikes().size());
-            image.getLikes().forEach((like)->{
-                if(like.getUser().getId() == principalId){
+            image.getLikes().forEach((like) -> {
+                if (like.getUser().getId() == principalId) {
                     image.setLikeState(true);
                 }
             });
@@ -68,5 +70,11 @@ public class ImageService {
 
     public List<Image> 인기사진() {
         return imageRepository.mPopular();
+    }
+
+    public Image 사진한건(int imageId) {
+        return imageRepository.findById(imageId).orElseThrow(() -> {
+            return new CustomValidationApiException("찾을 수 없는 이미지 입니다.");
+        });
     }
 }

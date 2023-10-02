@@ -5,13 +5,16 @@ import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.ImageService;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ImageController {
@@ -21,6 +24,13 @@ public class ImageController {
     @GetMapping({"/","image/story"})
     public String story(){
         return "image/story";
+    }
+
+    @GetMapping("/image/detail/{imageId}")
+    public String storyDetail(@PathVariable int imageId, Model model){
+
+        model.addAttribute("image",imageService.사진한건(imageId));
+        return "image/storyDetail";
     }
 
     @GetMapping("/image/popular")
