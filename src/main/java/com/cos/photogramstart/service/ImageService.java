@@ -4,6 +4,7 @@ import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+import com.cos.photogramstart.web.dto.image.ImageUpdateDto;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,5 +77,30 @@ public class ImageService {
         return imageRepository.findById(imageId).orElseThrow(() -> {
             return new CustomValidationApiException("찾을 수 없는 이미지 입니다.");
         });
+    }
+
+    @Transactional
+    public void 사진수정하기(int imageId, ImageUpdateDto imageUpdateDto) {
+        Image imageEntity = imageRepository.findById(imageId).orElseThrow(() -> {
+            return new CustomValidationApiException("찾을 수 없는 Id 입니다.");
+        });
+        imageEntity.setCaption(imageUpdateDto.getCaption());
+        UUID uuid = UUID.randomUUID();
+
+        // getOriginalFilename()은 실제 파일명을 리턴해준다.
+        String imageFileName = uuid + "_" + imageUpdateDto.getFile().getOriginalFilename();
+
+        // 실제 경로를 저장 Path(nio 패키지) : 파일이 저장되는 경로 + 파일 이름 = 실제 저장되는 경로
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+        // 통신 , I/O 가
+        try {
+            //write() 메서드는 실제 파일 경로와 실제 들어오는 파일을 Byte 로 바꾼것 , option 을 받는다.
+            Files.write(imageFilePath, imageUpdateDto.getFile().getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        imageEntity.setPostImageUrl(imageFileName);
+
     }
 }
