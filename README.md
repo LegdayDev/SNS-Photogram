@@ -23,15 +23,12 @@
 - oauth2-client
 - AOP
 - QLRM
+### DB-Diagram
+![SNS_Photogram_DB](https://github.com/LegdayDev/SNS-Photogram/assets/108314675/f2e80ee9-4d79-4209-9a8a-62a9bd7c1510)
+### ER-Diagram
+<img width="753" alt="ER-Diagram" src="https://github.com/LegdayDev/SNS-Photogram/assets/108314675/b4207047-c8cb-4470-b163-9f543016cd5d">
 
-### 데이터베이스
-```sql
-create user 'cos'@'%' identified by 'cos1234';
-GRANT ALL PRIVILEGES ON *.* TO 'cos'@'%';
-create database photogram;
-```
-### 프로그램 명세서
-https://www.notion.so/legday/SNS-8f225b8cff064a6b816fe01be62efe5a?pvs=4
+
 
 
 
