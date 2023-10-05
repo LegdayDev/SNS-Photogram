@@ -76,8 +76,8 @@
             <div class="tab-1-content-inner">
                 <!--아이템들-->
                 <c:forEach var="image" items="${dto.user.images}">
-                    <div class="img-box">
-                        <a href=""> <img src="/upload/${image.postImageUrl}"/></a>
+                    <div class="img-box" onclick="location.href=`/image/detail/${image.id}`" >
+                        <img src="/upload/${image.postImageUrl}"/>
                         <div class="comment">
                             <a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likeCount}</span>
                             </a>
