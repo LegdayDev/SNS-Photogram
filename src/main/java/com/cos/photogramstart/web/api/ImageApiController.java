@@ -61,4 +61,11 @@ public class ImageApiController {
         return new ResponseEntity<>(new CMRespDto<>(1,"스토리이미지 수정",null),HttpStatus.OK);
     }
 
+    @DeleteMapping("/api/image/{imageId}")
+    public ResponseEntity<?> imageDelete(@PathVariable int imageId){
+        imageService.사진삭제하기(imageId);
+
+        return new ResponseEntity<>(new CMRespDto<>(1,"스토리이미지 삭제성공",imageId),HttpStatus.OK);
+    }
+
 }

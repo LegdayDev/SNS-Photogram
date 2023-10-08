@@ -106,4 +106,12 @@ public class ImageService {
         }
 
     }
+
+    @Transactional
+    public void 사진삭제하기(int imageId) {
+        Image imageEntity = imageRepository.findById(imageId).orElseThrow(() -> {
+            return new CustomValidationApiException("찾을 수 없는 Id 입니다.");
+        });
+        imageRepository.delete(imageEntity);
+    }
 }

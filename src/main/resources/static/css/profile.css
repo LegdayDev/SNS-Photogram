@@ -393,6 +393,11 @@
   color: #fff !important;
 }
 
+.cta.red{
+  background: red !important;
+  color: #000000; !important;
+}
+
 .modal-info {
   position: fixed;
   top: 0;

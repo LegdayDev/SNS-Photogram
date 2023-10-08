@@ -30,6 +30,9 @@
                                         onclick="userStoryUpdate(${image.id},${image.user.id},${principal.user.id})">
                                     수정하기
                                 </button>
+                                <button class="cta red" onclick="userStoryDelete(${image.id},${principal.user.id})">
+                                    삭제하기
+                                </button>
                             </div>
                         </c:when>
                         <c:otherwise>
@@ -57,6 +60,25 @@
 <!--스토리 이미지 바꾸기 모달 End-->
 
 <script>
+    // 이미지삭제(imageId,userId)
+    function userStoryDelete(imageId){
+        if(confirm("삭제 하시겠습니까 ?")){
+            $.ajax({
+                type: "delete",
+                url : `/api/image/${imageId}`,
+                data : imageId,
+                dataType: "json"
+            }).done(res=>{
+                console.log("성공",res);
+                alert("이미지 삭제 성공 !");
+                location.href=`/user/${principal.user.id}`;
+            }).fail(error=>{
+                console.log("실패",error);
+            });
+        }
+
+    }
+
     // 실제 업데이트 정보(image, caption) 서버로 전송
     function userStoryUpdate(imageId, pageUserId, principalId) {
         let formData = new FormData($("#userImageForm")[0]);

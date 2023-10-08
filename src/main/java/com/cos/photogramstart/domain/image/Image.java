@@ -25,13 +25,13 @@ public class Image {
 
     // 이미지 좋아요
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image",orphanRemoval = true)
     private List<Likes> likes = new ArrayList<>();
 
     // 댓글
     @OrderBy("id DESC")
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image",orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     //사진을 전송받아서 그 사진을 서버에 특정 폴더에 저장 - DB에 그 저장된 경로를 insert

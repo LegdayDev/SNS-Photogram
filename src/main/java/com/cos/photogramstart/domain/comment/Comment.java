@@ -31,9 +31,6 @@ public class Comment {
     @JoinColumn(name = "imageId")
     private Image image;
 
-
-
-
     private LocalDateTime createDate;
 
     @PrePersist // DB에 INSERT 되기 직전에 실행

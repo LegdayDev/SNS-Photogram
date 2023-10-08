@@ -38,11 +38,11 @@ public class User {
     private String role; // 권한
 
     //양방향 매핑
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
     @JsonIgnoreProperties({"user"})
     private List<Image> images;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(orphanRemoval = true)
     private List<Subscribe> subscribes;
 
     private LocalDateTime createDate;
