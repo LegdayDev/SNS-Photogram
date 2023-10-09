@@ -3,6 +3,7 @@ package com.cos.photogramstart.service;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.web.dto.image.ImageUpdateDto;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
@@ -75,14 +76,14 @@ public class ImageService {
 
     public Image 사진한건(int imageId) {
         return imageRepository.findById(imageId).orElseThrow(() -> {
-            return new CustomValidationApiException("찾을 수 없는 이미지 입니다.");
+            return new CustomApiException("찾을 수 없는 이미지 입니다.");
         });
     }
 
     @Transactional
     public void 사진수정하기(int imageId, ImageUpdateDto imageUpdateDto) {
         Image imageEntity = imageRepository.findById(imageId).orElseThrow(() -> {
-            return new CustomValidationApiException("찾을 수 없는 Id 입니다.");
+            return new CustomApiException("찾을 수 없는 Id 입니다.");
         });
 
         imageEntity.setCaption(imageUpdateDto.getCaption());
@@ -110,7 +111,7 @@ public class ImageService {
     @Transactional
     public void 사진삭제하기(int imageId) {
         Image imageEntity = imageRepository.findById(imageId).orElseThrow(() -> {
-            return new CustomValidationApiException("찾을 수 없는 Id 입니다.");
+            return new CustomApiException("찾을 수 없는 Id 입니다.");
         });
         imageRepository.delete(imageEntity);
     }
