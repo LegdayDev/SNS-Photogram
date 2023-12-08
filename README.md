@@ -98,7 +98,8 @@
 - 프로필 페이지에서 이동 가능
 - 이미지와 설명을 작성할 수 있다.
 
-  ![image](https://github.com/LegdayDev/SNS-Photogram/assets/108314675/016c94c0-5ccc-47c6-a030-cea74f76668e
+  ![image](https://github.com/LegdayDev/SNS-Photogram/assets/108314675/1f7e75b8-6d23-47fa-a247-73340c76a0d9)
+
 #### 회원 정보 수정 페이지
 - `localhost:8080/user/{userId}/update`
 - 반드시 비밀번호를 입력해야 제출할 수 있도록 구현했다.
