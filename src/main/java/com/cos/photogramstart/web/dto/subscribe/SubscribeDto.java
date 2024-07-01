@@ -2,6 +2,8 @@ package com.cos.photogramstart.web.dto.subscribe;
 
 import lombok.*;
 
+import java.math.BigInteger;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -10,6 +12,6 @@ public class SubscribeDto {
     private int id;
     private String username;
     private String profileImageUrl;
-    private Integer subscribeState;
-    private Integer equalUserState;
+    private BigInteger subscribeState;
+    private BigInteger equalUserState;
 }

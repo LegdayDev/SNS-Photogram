@@ -40,9 +40,9 @@ public class SubScribeService {
         // 쿼리 세팅
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT u.id , u.username, u.profileImageUrl, ");
-        sb.append("if((SELECT 1 FROM subscribe WHERE fromUserId = ? AND toUserId = u.id),1,0) as subscribeState, "); // ? : principalId
+        sb.append("if((SELECT 1 FROM photogram.Subscribe WHERE fromUserId = ? AND toUserId = u.id),1,0) as subscribeState, "); // ? : principalId
         sb.append("if((CASE u.id WHEN ? THEN 1 else 0 end),1,0) as equalUserState "); // ? : principalId
-        sb.append("FROM user u INNER JOIN subscribe s ");
+        sb.append("FROM photogram.User u INNER JOIN photogram.Subscribe s ");
         sb.append("ON u.id = s.toUserId ");
         sb.append("WHERE s.fromUserId = ?"); // ? : pageUserId
 
